@@ -1,7 +1,7 @@
 ---
 lab:
-    title: 'Detect if your IoT Device was Tampered with Azure Security Center for IoT'
-    module: 'AZ-220T19-A: Azure Security Center and IoT Security'
+    title: 'Lab 19: Detect if your IoT Device was Tampered with Azure Security Center for IoT'
+    module: 'Module 10: Azure Security Center and IoT Security'
 ---
 
 # Detect if your IoT Device was Tampered with Azure Security Center for IoT
@@ -283,6 +283,15 @@ Security agents support the following features:
 
     ```cmd/sh
     demouser@IoTDeviceLinuxVM:~$
+    ```
+## Install Linux prerequisites
+
+Every Azure Security Center for IoT security agent flavor offers the same set of features, and supports similar configuration options. For the C#-based security agent we need auditd installed.
+
+1. Install auditd (The Linux Audit daemon) on your Linux VM. 
+
+    ```cmd/sh
+    sudo apt-get install auditd audispd-plugins
     ```
 
 ## Add Symmetric Keys to your device

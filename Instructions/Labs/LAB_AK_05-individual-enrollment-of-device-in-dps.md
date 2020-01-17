@@ -1,7 +1,7 @@
 ---
 lab:
-    title: 'Individual Enrollment of a Device in DPS'
-    module: 'AZ-220T05-A: Device Provisioning at Scale'
+    title: 'Lab 05: Individual Enrollment of a Device in DPS'
+    module: 'Module 3: Device Provisioning at Scale'
 ---
 
 # Individual Enrollment of a Device in DPS
@@ -366,7 +366,7 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 
 3. Locate the JSON for the `properties.desired` object.
    
-    This contains the Desired State for the device twin. Notice the `telemetryDelay` property already exists, and is set to `"2"`, as was configured when the device was provisioned based on the Iidividual enrollment in DPS.
+    This contains the Desired State for the device twin. Notice the `telemetryDelay` property already exists, and is set to `"2"`, as was configured when the device was provisioned based on the Individual Enrollment in DPS.
 
 4. Modify the `telemetryDelay` value to `"5"` to configure the device twin to set the Desired State to have the simulated device wait 5 seconds between telemetry readings.
 

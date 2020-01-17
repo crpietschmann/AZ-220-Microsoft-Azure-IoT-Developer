@@ -1,6 +1,6 @@
 # AZ-220: Microsoft Azure IoT Developer - BETA
 
-*Please note: Course is in Beta stage and labs are in the process of review in work in progress.*
+*Please note: Course is in Beta stage and labs are in the process of review in work in progress.  Be sure to review the known issues below before filing a new issue.  Thanks!*
 
 - **[Download Latest Student Handbook and AllFiles Content](../../releases/latest)**
 - **Are you a MCT?** - Have a look at our [GitHub User Guide for MCTs](https://microsoftlearning.github.io/MCT-User-Guide/)
@@ -36,3 +36,19 @@
 ### Classroom Materials
 
 It is strongly recommended that MCTs and Partners access these materials and in turn, provide them separately to students.  Pointing students directly to GitHub to access Lab steps as part of an ongoing class will require them to access yet another UI as part of the course, contributing to a confusing experience for the student. An explanation to the student regarding why they are receiving separate Lab instructions can highlight the nature of an always-changing cloud-based interface and platform. Microsoft Learning support for accessing files on GitHub and support for navigation of the GitHub site is limited to MCTs teaching this course only.
+
+You can find a processed, formatted version of the Markdown files at https://aka.ms/az220.
+
+### Known Issues in the Current Beta release
+
+**Please** refer to the current open issues to be sure that a new issue doesn't duplicate an existing issue.  The following are known issues that are not in the open issues as we are working on them already:
+
+* The initial lab setup - where to find the source files, where to find the scripts, etc. - is not in the instructions right now.
+
+* At least one lab requires running the setup script although it should always be a "catch up," not required.
+
+* The exercise numbers/names are not on the formatted version of the labs.
+
+* The formatted version of the labs does not have proper indicators on some of the notes.
+
+* Image references in the lab are generally broken.
