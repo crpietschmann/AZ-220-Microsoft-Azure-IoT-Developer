@@ -10,6 +10,8 @@ Our asset tracking solution is getting bigger, and provisioning devices one by o
 
 In this lab, you will setup a Group Enrollment within Device Provisioning Service (DPS) using a Root CA x.509 certificate chain. You will configure the linked IoT Hub to using monitoring to track the number of connected devices and telemetry messages sent, as well as send connection events to a log. Additionally you will create an alert that will be triggered based upon the average number of devices connected. You will the configure 10 simulated IoT Devices that will authenticate with DPS using a Device CA Certificate generated on the Root CA Certificate chain. The IoT Devices will be configured to send telemetry to the the IoT Hub.
 
+## Lab Introduction
+
 In this lab, you will:
 
 * Verify Lab Prerequisites
@@ -20,17 +22,19 @@ In this lab, you will:
 * Run the app until the alerts begin to fire.
 * View the metrics results and check the diagnostic logs.
 
+## Lab Instructions
 
-## Exercise 1: Verify Lab Prerequisites
+### Exercise 1: Verify Lab Prerequisites
 
+[tbd]
 
-## Exercise 2: Set Up and Use Metrics and Diagnostic Logs with an IoT Hub
+### Exercise 2: Set Up and Use Metrics and Diagnostic Logs with an IoT Hub
 
 If you have an IoT Hub solution running in production, you want to set up some metrics and enable diagnostic logs. Then if a problem occurs, you have data to look at that will help you diagnose the problem and fix it more quickly. In this lab, you'll see how to enable the diagnostic logs, and how to check them for errors. You'll also set up some metrics to watch, and alerts that fire when the metrics hit a certain boundary.
 
 For example, you could have an e-mail sent to you when the number of connected devices exceed a certain threshold, or when the number of messages used gets close to the quota of messages allowed per day for the IoT Hub.
 
-## Setup Resources
+#### Task 1: Setup Resources
 
 In order to complete this lab, you will need to reuse a number of resources from a previous lab - **Automatic Enrollment of Devices in DPS** as well as a storage account.
 
@@ -94,7 +98,7 @@ In order to complete this lab, you will need to reuse a number of resources from
     az iot dps linked-hub create --dps-name $DPSName -g $RGName --connection-string $IoTHubConnectionString --location $Location
 
     # Create a Storage Account
-    az storage account create --name $StorageAccountName --resource-group $RGName --location=$Location --sku Standard_LRS -o Table 
+    az storage account create --name $StorageAccountName --resource-group $RGName --location=$Location --sku Standard_LRS -o Table
 
     StorageConnectionString=$( az storage account show-connection-string --name $StorageAccountName -o tsv )
     ```
@@ -128,13 +132,11 @@ In order to complete this lab, you will need to reuse a number of resources from
 
 You have now ensured the resources are available for this lab. Next, we shall setup monitoring and logging.
 
-
-
-
-
-## Exercise 3: Enable Logging
+### Exercise 3: Enable Logging
 
 Azure Resource logs are platform logs emitted by Azure resources that describe their internal operation. All resource logs share a common top-level schema with the flexibility for each service to emit unique properties for their own events.
+
+#### Task 1: Enable diagnostics
 
 1. Sign in to the **Azure portal** and navigate to your IoT hub.
 
@@ -192,7 +194,7 @@ Azure Resource logs are platform logs emitted by Azure resources that describe t
 
 Later, when you look at the diagnostic logs, you'll be able to see the connect and disconnect logging for the device.
 
-## Setup Metrics
+#### Task 2: Setup Metrics
 
 Now set up some metrics to watch for when messages are sent to the hub.
 
@@ -232,7 +234,7 @@ Now set up some metrics to watch for when messages are sent to the hub.
 
     Your screen now shows the minimized metric for Telemetry messages sent, plus the new metric for avg connected devices. Notice that the chart title has updated to reflect both metrics.
 
-    > [!NOTE]  To edit the chart title, click the **pencil** to the right of the title. 
+    > [!NOTE]  To edit the chart title, click the **pencil** to the right of the title.
 
 1. Under the updated **Chart Title**, in the toolbar, click **Pin to dashboard**. Note that you can choose to pin to the current dashboard or choose another. Select the dashboard you created in the first lab - "AZ-220-RG".
 
@@ -244,10 +246,7 @@ Now set up some metrics to watch for when messages are sent to the hub.
 
 Now that we have enable logging and setup a chart to monitor metrics, we will set up an alert.
 
-
-
-
-## Exercise 4: Configure an Alert
+### Exercise 4: Configure an Alert
 
 Now let us create an alert. Alerts proactively notify you when important conditions are found in your monitoring data. They allow you to identify and address issues before the users of your system notice them. In our asset tracking scenario, we use sensors to track our assets being transported. Each time a sensor is added in a transportation box, it will auto provision through DPS. We want to have a metric for the warehouse manager of how many boxes were "tagged" and need to count the Device Connected events from IoT Hub.
 
@@ -319,7 +318,6 @@ In this task we are going to add an alert that will inform the warehouse manager
 
     > [!NOTE] An action group is a collection of notification preferences defined by the owner of an Azure subscription. An action group name must be unique within the Resource Group is is associated with. Azure Monitor and Service Health alerts use action groups to notify users that an alert has been triggered. Various alerts may use the same action group or different action groups depending on the user's requirements. You may configure up to 2,000 action groups in a subscription. You can learn more about creating and managing Action Groups [here](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/action-groups).
 
-
 1. Next to **Action group name**, enter **AZ-220 Email Action Group**.
 
     > [!NOTE] An action group name must be unique within the Resource Group is is associated with.
@@ -351,7 +349,6 @@ In this task we are going to add an alert that will inform the warehouse manager
 1. Finally, there is the option to **Enable the common alert schema** - select **Yes**.
 
    > [!NOTE] There are many benefits to using the Common Alert Schema. It standardizes the consumption experience for alert notifications in Azure today. Historically, the three alert types in Azure today (metric, log, and activity log) have had their own email templates, webhook schemas, etc. With the common alert schema, you can now receive alert notifications with a consistent schema. You can learn more about the Common ALert6 Schema [here](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/alerts-common-schema).
-
    > **Important:** Given the benefits, you may wonder why the common alert schema is not enabled by default - well, when you select **Yes** you will see a warning **Enabling the common alert schema might break any existing integrations.** Bear this in mind in your own environments.
 
 1. To save the **Email/SMS/Push/Voice** action configuration, click **OK**.
@@ -391,19 +388,17 @@ In this task we are going to add an alert that will inform the warehouse manager
 
 Now that we have create our alert, we should configure the environment we need for the device siumulation we will use to trigger the alert.
 
-
-
-## Exercise 5: Simulating the Sensors
+### Exercise 5: Simulating the Sensors
 
 As part of the asset-tracking scenario, we need to have devices that simulate the tags that will be used to track the assets during transportation. As each device is activated, it should use automatic device provisioning to connect to the Iot solution and start sending telemetry. In order to automatically connect, each device will need its own X509 certificate that is part of a chain to the root certificate used to create a group enrollment.
 
 In this task, we will verify the existing environment, perform any necessary setup, generate 10 device certificates, and configure a console application that will simulate the 10 devices.
 
-## Verify Environment
+#### Task 1: Verify Environment
 
 In **Lab 6-Automatic Enrollment of Devices in DPS** you configured DPS to use X509 resources. If you still have that configuration available, that will shortcut a few steps. However, if you did not complete the lab, make sure you check every step below.
 
-### Verify DPS Configuration
+#### Task 2: Verify DPS Configuration
 
 1. In your browser, navigate to the [Azure Portal](https://portal.azure.com/) and login to your subscription.
 
@@ -429,7 +424,7 @@ In **Lab 6-Automatic Enrollment of Devices in DPS** you configured DPS to use X5
 
 1. If the  **simulated-devices** enrollment group does not exist, continue with the **Verify OpenSSL** section below.
 
-### Verify OpenSSL
+#### Task 3: Verify OpenSSL
 
 In the following steps you will verify that OpenSSL tools installed in an earlier lab are still available.
 
@@ -453,7 +448,7 @@ In the following steps you will verify that OpenSSL tools installed in an earlie
 
 1. Jump down to the **Generate Device Certificates** in the next task.
 
-## Install OpenSSL Tools
+#### Task 4: Install OpenSSL Tools
 
 1. In the cloud shell, enter the following commands:
 
@@ -564,7 +559,7 @@ The first x.509 certificates needed are CA and intermediate certificates. These 
 
 1. In the **Primary Certificate** dropdown, select the **CA Certificate** that was uploaded to DPS previously.
 
-1. Notice the **Select the IoT hubs this group can be assigned to** dropdown has the **AZ-220-HUB-{YOUR-ID}** IoT Hub selected. This will ensure when the device is provisioned, it gets added to this IoT Hub.
+1. Notice the **Select the IoT hubs this group can be assigned to** dropdown has the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub selected. This will ensure when the device is provisioned, it gets added to this IoT Hub.
 
 1. In the Initial Device Twin State field, modify the `properties.desired` JSON object to include a property named `telemetryDelay` with the value of `"1"`. This will be used by the Device to set the time delay for reading sensor telemetry and sending events to IoT Hub.
 
@@ -585,15 +580,11 @@ The first x.509 certificates needed are CA and intermediate certificates. These 
 
 Now that the environment is setup, it's time to generate our device certificates.
 
-
-
-
-
-## Exercise 6: Simulate Devices
+### Exercise 6: Simulate Devices
 
 In this task we will be generating X509 certificates from the root certifcate. We will then use these certificates in a console application that will simulate 10 devices connecting to DPS and sending telemetry to an IoT Hub.
 
-## Generate Device Certificates
+#### Task 1: Generate Device Certificates
 
 We will now generate and download 10 device certificates.
 
@@ -615,7 +606,7 @@ We will now generate and download 10 device certificates.
     ```bash
     #!/bin/bash
 
-    # Generate 10 device certificates 
+    # Generate 10 device certificates
     # Rename for each device
     # download from the Cloud CLI
     pushd ~/certificates
@@ -624,8 +615,8 @@ We will now generate and download 10 device certificates.
         chmod +w ./certs/new-device.cert.pem
         ./certGen.sh create_device_certificate asset-track$i
         sleep 5
-        cp ./certs/new-device.cert.pfx ./certs/new-asset-track$i.cert.pfx 
-        download ./certs/new-asset-track$i.cert.pfx 
+        cp ./certs/new-device.cert.pfx ./certs/new-asset-track$i.cert.pfx
+        download ./certs/new-asset-track$i.cert.pfx
     done
     popd
     ```
@@ -655,7 +646,7 @@ We will now generate and download 10 device certificates.
 
 With these certificates available, you are ready to configure the device simulator.
 
-## Add Certificates to Simulator
+#### Task 2: Add Certificates to Simulator
 
 1. Copy the downloaded **x.509 Device Certificate** files to the `/LabFiles` directory; within the root directory along-side the `Program.cs` file. The **Simulated Devices** project will need to access this certificate file when authenticating to the Device Provisioning Service.
 
@@ -708,7 +699,7 @@ With these certificates available, you are ready to configure the device simulat
 
 This app is very similar to the app used in the earlier lab **L06-Automatic Enrollment of Devices in DPS**. The primary difference is that instead of just enrolling a single device simulator and then sending telemetry, it instead enrolls 10 devices, one every 30 seconds. Each simulated device will then send telemetry. This should then cause our alert to be raised and log monitoring data to storage.
 
-## Run the Simulator
+#### Task 3: Run the Simulator
 
 1. To run the app, in Visual Studio Code, open a terminal, and enter the following command:
 
@@ -734,16 +725,15 @@ This app is very similar to the app used in the earlier lab **L06-Automatic Enro
 
     ![Email Alert](../../Linked_Image_Files/M99-L17-04-email-alert.png)
 
-
 1. Once the alerts have arrived, you can exit the application by either hitting **CTRL+C** in the Visual Studio Code terminal, or by closing Visual Studio Code.
 
     > [!NOTE] When the devices are disconnected, you will receive messages informing you the alert has been resolved.
 
 Now, let's check the storage account to see if anything has been logged by Azure Monitor.
 
-## Exercise 7: Review Metrics, Alerts and Archive
+### Exercise 7: Review Metrics, Alerts and Archive
 
-## See the Metrics in the Portal
+#### Task 1: See the Metrics in the Portal
 
 1. In the Azure Portal, open the Metrics chart you pinned to the dashboard by clicking on the chart title.
 
@@ -755,7 +745,7 @@ Now, let's check the storage account to see if anything has been logged by Azure
 
     ![metrics chart](../../Linked_Image_Files/M99-L17-05-metrics-chart.png)
 
-## See the Alerts
+#### Task 2: See the Alerts
 
 To use the Azure Portal to review alerts, complete the following steps.
 
@@ -793,7 +783,7 @@ To use the Azure Portal to review alerts, complete the following steps.
 
     If there were any issues related to the alert, addition details would be shown here.
 
-## See the Diagnostic Logs
+#### Task 3: See the Diagnostic Logs
 
 Earlier, you set up your diagnostic logs to be exported to blob storage. Let's check to see what was written.
 
@@ -803,7 +793,7 @@ Earlier, you set up your diagnostic logs to be exported to blob storage. Let's c
 
     The **Overview** for the storage account will be displayed.
 
-1. Scroll down until you can see the metrics charts for the Storage Account: *Total egress*, *Toral ingress*, *Average latency* and *Request breakdown*. 
+1. Scroll down until you can see the metrics charts for the Storage Account: *Total egress*, *Toral ingress*, *Average latency* and *Request breakdown*.
 
     You should see that there is activity displayed.
 
