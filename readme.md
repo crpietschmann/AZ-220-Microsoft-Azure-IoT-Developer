@@ -1,6 +1,4 @@
-# AZ-220: Microsoft Azure IoT Developer - BETA
-
-*Please note: Course is in Beta stage and labs are in the process of review in work in progress.  Be sure to review the known issues below before filing a new issue.  Thanks!*
+# AZ-220: Microsoft Azure IoT Developer
 
 - **[Download Latest Student Handbook and AllFiles Content](../../releases/latest)**
 - **Are you a MCT?** - Have a look at our [GitHub User Guide for MCTs](https://microsoftlearning.github.io/MCT-User-Guide/)
@@ -27,9 +25,11 @@
 
 ## How do I contribute?
 
-- Any MCT can submit a pull request to the code or content in the GitHub repro, Microsoft and the course author will triage and include content and lab code changes as needed.
+- Updates to course labs are in development. Some minor changes are being implemented and some more global updates are being developed. It may be advisable for contributors to propose changes by raising issues before creating pull requests.  
 
-- You can submit bugs, changes, improvement and ideas.  Find a new Azure feature before we have?  Submit a new demo!
+- Any MCT can submit a pull request (against the Master branch) to the code or content in the GitHub repro, Microsoft and the course author will triage and include content and lab code changes as needed. If you encounter any blocking issues in the labs, please raise issues immediately.
+
+- You can submit bugs, changes, improvement and ideas. Find a new Azure feature before we have? Submit a new demo!
 
 ## Notes
 
@@ -37,18 +37,14 @@
 
 It is strongly recommended that MCTs and Partners access these materials and in turn, provide them separately to students.  Pointing students directly to GitHub to access Lab steps as part of an ongoing class will require them to access yet another UI as part of the course, contributing to a confusing experience for the student. An explanation to the student regarding why they are receiving separate Lab instructions can highlight the nature of an always-changing cloud-based interface and platform. Microsoft Learning support for accessing files on GitHub and support for navigation of the GitHub site is limited to MCTs teaching this course only.
 
-You can find a processed, formatted version of the Markdown files at https://aka.ms/az220.
+You can find a processed, formatted version of the Markdown files at https://aka.ms/az220labs.
 
-### Known Issues in the Current Beta release
+### Known Issues in the Current release
 
 **Please** refer to the current open issues to be sure that a new issue doesn't duplicate an existing issue.  The following are known issues that are not in the open issues as we are working on them already:
 
-* The initial lab setup - where to find the source files, where to find the scripts, etc. - is not in the instructions right now.
+* Most labs require running the setup script in order to create specifically named IoT devices. Work is being done to "clean up" the device resources within and across labs.
 
-* At least one lab requires running the setup script although it should always be a "catch up," not required.
+* Many of the lab Exercises have not been broken up into defined Tasks, which can make it easy to get lost or miss a step. Work is being done to address this formatting.
 
-* The exercise numbers/names are not on the formatted version of the labs.
-
-* The formatted version of the labs does not have proper indicators on some of the notes.
-
-* Image references in the lab are generally broken.
+* There are places within the lab steps where images could improve the clarity of the instructions. Images are currently being added to the labs where we feel they are required. However, we intend to keep image count low due to the fluid nature of the Azure UI.
